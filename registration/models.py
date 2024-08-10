@@ -16,7 +16,7 @@ class Booking(models.Model):
     def save(self, *args, **kwargs):
         if not self.qr_code:
             qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-            qr.add_data(f'https://ticketing-system-prom.onrender.com/booking/{self.id}')
+            qr.add_data(f'https://swc-prom-ticketing.onrender.com/booking/{self.id}')
             qr.make(fit=True)
             img = qr.make_image(fill='black', back_color='white')
             buffer = BytesIO()
