@@ -3,33 +3,10 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <header>
     <h1>Book Your Tickets</h1>
-    <script>
-        function generateGuestFields() {
-            const numTickets = document.getElementById('id_number_of_tickets').value;
-            const numGuests = numTickets;
-            const guestFieldsContainer = document.getElementById('guest-fields-container');
-            guestFieldsContainer.innerHTML = '';
-
-            for (let i = 1; i <= numGuests; i++) {
-                const nameField = document.createElement('input');
-                nameField.type = 'text';
-                nameField.name = `guest_name_${i}`;
-                nameField.placeholder = `Guest ${i} Name`;
-
-                const emailField = document.createElement('input');
-                emailField.type = 'email';
-                emailField.name = `guest_email_${i}`;
-                emailField.placeholder = `Guest ${i} CBE Email`;
-                emailField.pattern = '^[a-zA-Z0-9._%+-]+@educbe.ca$';
-                emailField.title = 'Please enter a valid CBE email address ending with @educbe.ca.';
-
-                guestFieldsContainer.appendChild(nameField);
-                guestFieldsContainer.appendChild(emailField);
-                guestFieldsContainer.appendChild(document.createElement('br'));
-            }
-        }
-    </script>
+    
 </header>
+
+<img src="bulldogs logo 1.1.png" alt="Fall Formal Logo" width=150 height=150>
 
 <section class="transparent-section">
 <body>
