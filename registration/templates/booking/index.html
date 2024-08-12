@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -6,7 +7,7 @@
     
 </header>
 
-<img src="bulldogs logo 1.1.png" alt="Fall Formal Logo" width=150 height=150>
+<img src="{% static 'bulldogs logo 1.1.png' %}" alt="Fall Formal Logo" width=150 height=150>
 
 <section class="transparent-section">
 <body>
@@ -22,23 +23,38 @@
 
 
 
-</body>
-
 </section>
+
+<section class="transparent-section" id="ticket_pricing">
+    <h2>Booking Successful!</h2>
+    <p>Your booking has been confirmed. Check your email for details.</p>
+</section>
+
+
+<section class="transparent-section" id="event_information">
+    <h2>Booking Successful!</h2>
+    <p>Your booking has been confirmed. Check your email for details.</p>
+</section>
+
+
+</body>
 
 <style>
 
     .transparent-section {
         background-color: rgba(255, 255, 255, 0.3); /* White background with 0.3 transparency */
         padding-left: 50px;
-        padding-top: 50px;
+        padding-top: 40px;
         padding-right: 50px;
-        padding-bottom: 50px;
+        padding-bottom: 40px;
         margin: 100px;
     }
 
-    .transparent-section p, body {
-        color: rgba(0, 0, 0, 1); /* Fully opaque text */
+    .transparent-section p, body, h2 {
+        color: rgba(255, 255, 255, 1); /* Fully opaque text */
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+
     }
 
     .guest_fields {
