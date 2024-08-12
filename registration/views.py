@@ -48,6 +48,9 @@ def book_tickets(request):
 def success(request):
     return render(request, 'booking/success.html')
 
+def home(request):
+    return render(request, 'booking/home.html')
+
 def qr_code_scan(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 

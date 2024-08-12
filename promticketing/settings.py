@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%c@s8!kxkq4=pkf=_qg7d+86a2vp8#40+^i3bp+%ikz3bf^%68
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['swc-prom-ticketing.onrender.com']
+ALLOWED_HOSTS = ['swc-prom-ticketing.onrender.com', '127.0.0.1']
 
 
 # Application definition
