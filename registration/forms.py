@@ -8,7 +8,7 @@ class BookingForm(forms.ModelForm):
 
     class Meta:
         model = Booking
-        fields = ['name', 'phone_number', 'school_email', 'number_of_tickets', 'alert_phone_number']
+        fields = ['name', 'phone_number', 'school_email', 'number_of_tickets']
 
     def clean_school_email(self):
         email = self.cleaned_data.get('school_email')

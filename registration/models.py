@@ -8,7 +8,6 @@ class Booking(models.Model):
     phone_number = models.CharField(max_length=15)
     school_email = models.EmailField()
     number_of_tickets = models.PositiveIntegerField()
-    alert_phone_number = models.CharField(max_length=15)
     payment_due = models.FloatField(editable=False, default=0)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True, null=True)
     paid = models.BooleanField(default=False)
