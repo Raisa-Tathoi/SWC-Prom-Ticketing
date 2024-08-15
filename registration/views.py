@@ -98,7 +98,11 @@ def index(request):
 
 def qr_code_scan(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
-
+    
+    context = {
+        'booking': booking
+    }
+    
     if booking.paid:
         guests = booking.guests.all()
         return render(request, 'booking_details.html', {'booking': booking, 'guests': guests})
