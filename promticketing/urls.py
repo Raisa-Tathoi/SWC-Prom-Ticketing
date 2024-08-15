@@ -25,5 +25,5 @@ urlpatterns = [
     path('mark_as_paid/<int:booking_id>/', mark_as_paid, name='mark_as_paid'),
     path('success/', success, name='success'),
     path('booking/<int:booking_id>/', qr_code_scan, name='qr_code_scan'),
-    path('payment_due/<int:booking_id>/', qr_code_scan, name='payment_due_scan'),
+    path('payment_due/<int:booking_id>/', qr_code_scan, name='payment_due'),
 ]
