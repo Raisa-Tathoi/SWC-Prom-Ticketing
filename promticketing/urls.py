@@ -22,8 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('book/', book_tickets, name='book_tickets'),
-    path('mark_as_paid/', mark_as_paid, name='mark_as_paid'),
+    path('mark_as_paid/<int:booking_id>/', mark_as_paid, name='mark_as_paid'),
     path('success/', success, name='success'),
-    path('booking/', qr_code_scan, name='qr_code_scan'),
-    path('payment_due/', qr_code_scan, name='payment_due'),
+    path('booking/<int:booking_id>/', qr_code_scan, name='qr_code_scan'),
+    path('payment_due/<int:booking_id>/', qr_code_scan, name='payment_due'),
 ]
