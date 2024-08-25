@@ -16,13 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from registration.views import book_tickets, mark_as_paid, index, success, qr_code_scan, update_booking_paid_status
+from registration.views import book_tickets, index, success, qr_code_scan, update_booking_paid_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('book/', book_tickets, name='book_tickets'),
-    path('mark_as_paid/<int:booking_id>/', mark_as_paid, name='mark_as_paid'),
     path('success/', success, name='success'),
     path('booking/<int:booking_id>/', qr_code_scan, name='qr_code_scan'),
     path('payment_due/<int:booking_id>/', qr_code_scan, name='payment_due'),

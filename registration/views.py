@@ -6,9 +6,10 @@ from .models import Booking, Guest
 import qrcode
 from io import BytesIO
 from django.core.files import File
+import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import json
+import logging
 
 
 def book_tickets(request):
@@ -55,46 +56,37 @@ def book_tickets(request):
     return render(request, 'booking/book_tickets.html', {'form': form})
 
 
-def mark_as_paid(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id)
-    booking.paid = True
-    booking.save()
-
-    # Send booking details email
-    email_recipients = [booking.school_email] + [guest.email for guest in booking.guests.all()]
-    booking_details_email = EmailMessage(
-        'Your Booking Details',
-        'Please find your booking details QR code attached. Show this to the volunteer at the entrance to redeem your ticket. BE SURE TO BRING YOUR SCHOOL ID OR A PICTURE IDENTIFICATION WITH YOU!!',
-        settings.DEFAULT_FROM_EMAIL,
-        email_recipients
-    )
-
-    # Generate QR code for booking details
-    booking_qr_code = generate_qr_code(f'https://swc-prom-ticketing.onrender.com/booking_details/{booking.id}')
-    booking.booking_qr_code.save(f'booking_qr_code_{booking.id}.png', booking_qr_code, save=False)
-    booking.save()  # Save QR code path to model
-
-    booking_details_email.attach_file(booking.booking_qr_code.path)
-    booking_details_email.send()
-
-    return redirect('success')
-
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def update_booking_paid_status(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        booking_id = data.get('booking_id')
-        paid = data.get('paid')
         try:
+            data = json.loads(request.body)
+            booking_id = data.get('booking_id')
+            paid = data.get('paid')
+
+            if booking_id is None or paid is None:
+                logger.error("Missing booking_id or paid field in the request")
+                return JsonResponse({'status': 'error', 'message': 'Missing booking_id or paid field'})
+
             booking = Booking.objects.get(id=booking_id)
             booking.paid = paid
             booking.save()
+
+            logger.info(f"Booking ID {booking_id} updated to {'paid' if paid else 'not paid'}")
             return JsonResponse({'status': 'success'})
         except Booking.DoesNotExist:
+            logger.error(f"Booking ID {booking_id} not found")
             return JsonResponse({'status': 'error', 'message': 'Booking not found'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'})
-
+        except json.JSONDecodeError:
+            logger.error("Invalid JSON data")
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'})
+        except Exception as e:
+            logger.error(f"Unexpected error: {str(e)}")
+            return JsonResponse({'status': 'error', 'message': 'An unexpected error occurred'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def generate_qr_code(url):
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
