@@ -33,3 +33,32 @@
     <button type="submit">Save Changes</button>
 </form>
 {% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                fetch('{% url 'update_booking_paid_status' %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        'booking_id': this.dataset.bookingId,
+                        'paid': this.checked
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Status updated');
+                    } else {
+                        console.log('Error updating status');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
