@@ -6,6 +6,8 @@ from .models import Booking, Guest
 import qrcode
 from io import BytesIO
 from django.core.files import File
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 def book_tickets(request):
@@ -76,6 +78,17 @@ def mark_as_paid(request, booking_id):
 
     return redirect('success')
 
+
+def update_booking_paid_status(request):
+    if request.method == 'POST':
+        for key in request.POST:
+            if key.startswith('paid_'):
+                booking_id = key.split('_')[1]
+                booking = get_object_or_404(Booking, id=booking_id)
+                booking.paid = 'paid_' in request.POST
+                booking.save()
+
+        return HttpResponseRedirect(reverse('admin:booking_changelist'))
 
 def generate_qr_code(url):
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)

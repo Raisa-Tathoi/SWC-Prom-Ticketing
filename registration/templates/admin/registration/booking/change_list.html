@@ -2,30 +2,34 @@
 {% load i18n %}
 
 {% block result_list %}
-<table class="admin-list-table">
-    <thead>
-        <tr>
-            <th>Booking Details</th>
-            <th>Guests</th>
-            <th>Payment Due</th>
-            <th>Paid</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for booking in cl.result_list %}
+<form method="post" action="{% url 'update_booking_paid_status' %}">
+    {% csrf_token %}
+    <table class="admin-list-table">
+        <thead>
             <tr>
-                <td>{{ booking.name }} - {{ booking.school_email }}</td>
-                <td>
-                    {% for guest in booking.guests.all %}
-                        {{ guest.name }} - {{ guest.email}} <br>
-                    {% endfor %}
-                </td>
-                <td>{{ booking.payment_due }}</td>
-                <td>
-                    <input type="checkbox" {% if booking.paid %}checked{% endif %}>
-                </td>
+                <th>Booking Details</th>
+                <th>Guests</th>
+                <th>Payment Due</th>
+                <th>Paid</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for booking in cl.result_list %}
+                <tr>
+                    <td>{{ booking.name }} - {{ booking.school_email }}</td>
+                    <td>
+                        {% for guest in booking.guests.all %}
+                            {{ guest.name }} - {{ guest.email}} <br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ booking.payment_due }}</td>
+                    <td>
+                        <input type="checkbox" name="paid_{{ booking.id }}" {% if booking.paid %}checked{% endif %}>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Save Changes</button>
+</form>
 {% endblock %}
