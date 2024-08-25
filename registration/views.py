@@ -114,4 +114,8 @@ def qr_code_scan(request, booking_id):
         guests = booking.guests.all()
         return render(request, 'booking/booking_details.html', {'booking': booking, 'guests': guests})
     else:
-        return render(request, 'booking/payment_due.html', {'payment_due': booking.payment_due})
+        return render(request, 'booking/payment_due.html', {
+            'payment_due': booking.payment_due,
+            'name': booking.name,
+            'phone_number': booking.phone_number
+        })
