@@ -4,12 +4,27 @@
     <h1>Payment Due</h1>
 </header>
 <body>
-    <h2>Payment Due: {{ payment_due }}</h2>
     <h2>Name: {{ name }}</h2>
     <h2>Phone: {{ phone_number }}</h2>
+
+    <section class="transparent-section">
+        <p>${{ payment_due }}</p>
+    <section>
+
 </body>
 
 <style>
+
+    .transparent-section {
+        background-color: rgba(255, 255, 255, 0.3); /* White background with 0.3 transparency */
+        padding-left: 50px;
+        padding-top: 40px;
+        padding-right: 50px;
+        padding-bottom: 40px;
+        border-radius: 20px;
+        margin: 100px;
+    }
+
     header {
         background: white;
 
@@ -48,7 +63,7 @@
     p {
         text-align: center;
         font-family: 'Roboto', sans-serif;
-        font-size: 20px;
+        font-size: 100px;
         color: white;
         font-weight: bold;
         padding: 10px;
