@@ -37,9 +37,9 @@ class Booking(models.Model):
             self.booking_qr_code.save(file_name, File(buffer), save=False)
 
         if self.number_of_tickets % 2 == 0:
-            pending = self.number_of_tickets * 5
+            pending = self.number_of_tickets * 5.00
         else:
-            pending = self.number_of_tickets * 7
+            pending = self.number_of_tickets * 7.00
         self.payment_due = pending
 
         super().save(*args, **kwargs)
