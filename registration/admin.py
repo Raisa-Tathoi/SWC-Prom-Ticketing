@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.core.mail import EmailMessage
 from django.conf import settings
-from .models import Booking, Guest
-from .views import generate_qr_code
+from registration.models import Booking, Guest
+from registration.views import generate_qr_code
 
 class GuestInline(admin.TabularInline):
     model = Guest
@@ -33,6 +33,7 @@ class BookingAdmin(admin.ModelAdmin):
             # Send the booking details email
             self.send_booking_details_email(obj)
         super().save_model(request, obj, form, change)
+
 
     def send_booking_details_email(self, booking):
         email_recipients = [booking.school_email] + [guest.email for guest in booking.guests.all()]
